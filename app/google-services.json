@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "776318181283",
+    "firebase_url": "https://prestamistaproject-6f943.firebaseio.com",
+    "project_id": "prestamistaproject-6f943",
+    "storage_bucket": "prestamistaproject-6f943.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776318181283:android:0d7ff90ebd2066c02dc416",
+        "android_client_info": {
+          "package_name": "aplicacion.prestamista.prestamistaprojecttrabajador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776318181283-vffm1bl1v2p55kacmkklun4okutjh4aq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aplicacion.prestamista.prestamistaprojecttrabajador",
+            "certificate_hash": "41593cf0bce3254762a2e1ce504c1e3ff0d18f94"
+          }
+        },
+        {
+          "client_id": "776318181283-1ttv1lvbtcgkbhnkcp6im6a8ede6a35i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0-8bfWDgtEeorvLVc89Cu22z_Mt8KGT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776318181283-1ttv1lvbtcgkbhnkcp6im6a8ede6a35i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

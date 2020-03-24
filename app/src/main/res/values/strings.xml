@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PrestamistaProjectTrabajador</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="app_fecha">Fecha</string>
+    <string name="app_valorPrestado">Valor</string>
+    <string name="app_mombreCliente">Nombre</string>
+    <string name="app_direccion">Dirección</string>
+    <string name="app_telefono">Teléfono</string>
+    <string name="app_cuota">Cuota</string>
+    <string name="app_numCuotas">Número Cuotas</string>
+    <string name="app_botonRegistrar">Registrar</string>
+</resources>
