@@ -10,4 +10,8 @@
     <string name="app_cuota">Cuota</string>
     <string name="app_numCuotas">Número Cuotas</string>
     <string name="app_botonRegistrar">Registrar</string>
+    <string name="enter_email">Ingrese correo electronico</string>
+    <string name="enter_password">Ingrese contraseña</string>
+    <string name="registrar">Registrarse</string>
+    <string name="login">Iniciar Sesion</string>
 </resources>

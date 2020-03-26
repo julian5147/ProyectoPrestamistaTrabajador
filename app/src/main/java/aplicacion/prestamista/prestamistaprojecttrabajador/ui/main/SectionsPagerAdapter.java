@@ -2,12 +2,15 @@ package aplicacion.prestamista.prestamistaprojecttrabajador.ui.main;
 
 import android.content.Context;
 
+import java.util.List;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import aplicacion.prestamista.prestamistaprojecttrabajador.R;
+import aplicacion.prestamista.prestamistaprojecttrabajador.entities.Cliente;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
