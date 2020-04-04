@@ -2,6 +2,7 @@ package aplicacion.prestamista.prestamistaprojecttrabajador.ui.main;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -18,31 +19,36 @@ import aplicacion.prestamista.prestamistaprojecttrabajador.entities.Cliente;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
-    private final Context mContext;
+    private final List<Fragment> listaDeFragmentos = new ArrayList<>();
+    private final List<String> listaDeTitulosDeFragmentos = new ArrayList<>();
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm);
-        mContext = context;
+    public SectionsPagerAdapter(FragmentManager manager) {
+        super(manager);
     }
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return listaDeFragmentos.get(position);
     }
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 2;
+        return listaDeFragmentos.size();
+    }
+
+    public void agregarFragmento(Fragment fragment, String title) {
+        listaDeFragmentos.add(fragment);
+        listaDeTitulosDeFragmentos.add(title);
+    }
+
+    // Si es el título de la última pestaña, regresamos null, lo
+    // cual regresará el icono únicamente
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return listaDeTitulosDeFragmentos.get(position);
+    }
+
+    public List<String> getListaDeTitulosDeFragmentos() {
+        return listaDeTitulosDeFragmentos;
     }
 }

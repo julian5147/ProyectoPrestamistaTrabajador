@@ -4,6 +4,11 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Date;
 
+/**
+ * Clase que se encarga de representar un objeto cuota, el cual cada cliente tiene varias de estás
+ * @author Julián Salgado
+ * @version 1.0
+ */
 @IgnoreExtraProperties
 public class Cuota {
 

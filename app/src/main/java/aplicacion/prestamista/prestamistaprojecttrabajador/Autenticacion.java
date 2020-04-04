@@ -33,6 +33,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Clase que me permite controlar la interfaz de autenticación, además programar el comprotamiento
+ * a la hora de registrar e inicar sesión
+ * @author Julián Salgado
+ * @version 1.0
+ */
 public class Autenticacion extends AppCompatActivity {
 
     //defining view objects
@@ -77,6 +83,11 @@ public class Autenticacion extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método que se encarga de registrar un usuario y validar que los campos no esten vacios,
+     * mostrando sus respectivos mensajes al usuario, este método es utilizado en el onClick del
+     * botón de registrarse
+     */
     private void registrarUsuario() {
 
         //Obtenemos el email y la contraseña desde las cajas de texto
@@ -120,6 +131,11 @@ public class Autenticacion extends AppCompatActivity {
 
     }
 
+    /**
+     * Método que se encarga de verificar si un usuario se puede loguear, además de validar que los campos
+     * no esten vacios, mostrando sus respectivos mensajes al usuario, este método es utilizado en el onClick del
+     * botón de inciar sesión
+     */
     private void loguearUsuario() {
         //Obtenemos el email y la contraseña desde las cajas de texto
         final String email = TextEmail.getText().toString().trim();
@@ -147,8 +163,6 @@ public class Autenticacion extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
                         if (task.isSuccessful()) {
-                            int pos = email.indexOf("@");
-                            String user = email.substring(0, pos);
                             Toast.makeText(Autenticacion.this, "Bienvenido: " + TextEmail.getText(), Toast.LENGTH_LONG).show();
                             FirebaseUser trabajador = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = trabajador.getUid();

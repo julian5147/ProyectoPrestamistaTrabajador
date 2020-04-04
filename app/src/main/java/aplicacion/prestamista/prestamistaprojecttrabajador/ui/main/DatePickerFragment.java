@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * Clase que me permite mostrar el calendario en un fragment flotante para elegir la fecha
+ * tanto a la hora de registrar un cliente como al registrar un cuota
+ */
 public class DatePickerFragment extends DialogFragment {
 
     private DatePickerDialog.OnDateSetListener listener;
