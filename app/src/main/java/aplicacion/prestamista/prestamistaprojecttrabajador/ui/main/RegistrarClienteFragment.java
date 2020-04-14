@@ -55,6 +55,7 @@ public class RegistrarClienteFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_registrar_cliente, container, false);
         prestamista = FirebaseDatabase.getInstance().getReference();
+        prestamista.keepSynced(true);
         editTextFecha = view.findViewById(R.id.editTextFecha);
         editTextValor = view.findViewById(R.id.editTextValor);
         editTextNombre = view.findViewById(R.id.editTextNombre);

@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * Clase que me permite controlar la interfaz de autenticación, además programar el comprotamiento
  * a la hora de registrar e inicar sesión
+ *
  * @author Julián Salgado
  * @version 1.0
  */
@@ -49,7 +50,7 @@ public class Autenticacion extends AppCompatActivity {
 
     //Declaramos un objeto firebaseAuth
     private FirebaseAuth firebaseAuth;
-
+    private FirebaseUser trabajador;
 
 
     @Override
@@ -59,7 +60,14 @@ public class Autenticacion extends AppCompatActivity {
 
         //inicializamos el objeto firebaseAuth
         firebaseAuth = FirebaseAuth.getInstance();
-
+        trabajador = FirebaseAuth.getInstance().getCurrentUser();
+        if (trabajador != null) {
+            String uid = trabajador.getUid();
+            Intent intencion = new Intent(getApplication(), MainActivity.class);
+            intencion.putExtra("uid", uid);
+            startActivity(intencion);
+            finish();
+        }
         //Referenciamos los views
         TextEmail = (EditText) findViewById(R.id.TxtEmail);
         TextPassword = (EditText) findViewById(R.id.TxtPassword);
@@ -164,7 +172,7 @@ public class Autenticacion extends AppCompatActivity {
                         //checking if success
                         if (task.isSuccessful()) {
                             Toast.makeText(Autenticacion.this, "Bienvenido: " + TextEmail.getText(), Toast.LENGTH_LONG).show();
-                            FirebaseUser trabajador = FirebaseAuth.getInstance().getCurrentUser();
+                            trabajador = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = trabajador.getUid();
                             Intent intencion = new Intent(getApplication(), MainActivity.class);
                             intencion.putExtra("uid", uid);

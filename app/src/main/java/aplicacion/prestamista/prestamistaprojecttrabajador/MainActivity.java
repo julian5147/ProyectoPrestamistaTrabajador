@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,9 +37,9 @@ import java.util.List;
 
 import aplicacion.prestamista.prestamistaprojecttrabajador.entities.Cliente;
 import aplicacion.prestamista.prestamistaprojecttrabajador.entities.Cuota;
-import aplicacion.prestamista.prestamistaprojecttrabajador.ui.main.PlaceholderFragment;
+import aplicacion.prestamista.prestamistaprojecttrabajador.ui.main.PlaceholderFragmentInicial;
 import aplicacion.prestamista.prestamistaprojecttrabajador.ui.main.RegistrarClienteFragment;
-import aplicacion.prestamista.prestamistaprojecttrabajador.ui.main.SectionsPagerAdapter;
+import aplicacion.prestamista.prestamistaprojecttrabajador.ui.main.SectionsPagerAdapterInit;
 
 /**
  * Clase que me permite consultar y visualizar la información los respectivos clientes
@@ -48,30 +50,30 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private String uid;
     private List<Cliente> clientes;
     private DatabaseReference prestamista;
-    private TabLayout tabLayout;
-    private SectionsPagerAdapter sectionsPagerAdapter;
+    private SectionsPagerAdapterInit sectionsPagerAdapterInit;
     private ViewPager viewPager;
     private ProgressDialog progressDialog;
     private FrameLayout frameLayout;
     private Toolbar toolbar;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firebaseAuth = FirebaseAuth.getInstance();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Clientes");
         frameLayout = findViewById(R.id.container);
         clientes = new ArrayList<>();
         prestamista = FirebaseDatabase.getInstance().getReference();
-        Intent intent = getIntent();
+        prestamista.keepSynced(true);
+        final Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        sectionsPagerAdapterInit = new SectionsPagerAdapterInit(getSupportFragmentManager());
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setAdapter(sectionsPagerAdapterInit);
         progressDialog = new ProgressDialog(this);
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         getClientesFromFirebase();
@@ -83,31 +85,25 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         toolbar.setTitle("Registrar Cliente");
                         RegistrarClienteFragment registrarClienteFragment = new RegistrarClienteFragment(uid, getSupportFragmentManager());
                         openFragment(registrarClienteFragment);
-                        tabLayout.setVisibility(View.INVISIBLE);
                         frameLayout.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.INVISIBLE);
+                        toolbar.getMenu().getItem(0).setVisible(false);
                         return true;
                     case R.id.navigation_users:
                         toolbar.setTitle("Clientes");
                         frameLayout.setVisibility(View.INVISIBLE);
                         getClientesFromFirebase();
-                        tabLayout.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.VISIBLE);
+                        toolbar.getMenu().getItem(0).setVisible(true);
                         return true;
                     case R.id.navigation_gastos:
                         toolbar.setTitle("Registrar Gastos");
                         GastosFragment gastosFragment = new GastosFragment(uid);
                         openFragment(gastosFragment);
-                        tabLayout.setVisibility(View.INVISIBLE);
                         frameLayout.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.INVISIBLE);
+                        toolbar.getMenu().getItem(0).setVisible(false);
                         return true;
-                    case R.id.navigation_search:
-                        MenuItem searchItem = item;
-                        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-                        searchView.setOnQueryTextListener(MainActivity.this);
-                        return true;
-
                 }
                 return false;
             }
@@ -132,15 +128,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     /**
      * método que se encarga de visualizar dinámicamente todos los clientes que tiene ese trabjador
      * en un fragment con su respectivo tab
-     *
-     * @param viewPager es el componente en donde se va adaptar cada fragment y cada tab
      */
-    private void agregarTabs(ViewPager viewPager) {
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    private void agregarTabs() {
+        SectionsPagerAdapterInit sectionsPagerAdapterInit = new SectionsPagerAdapterInit(getSupportFragmentManager());
         for (Cliente cliente : clientes) {
-            sectionsPagerAdapter.agregarFragmento(new PlaceholderFragment(cliente, uid), cliente.getNombre());
+            sectionsPagerAdapterInit.agregarFragmento(new PlaceholderFragmentInicial(cliente, uid), cliente.getNombre());
         }
-        viewPager.setAdapter(sectionsPagerAdapter);
+        viewPager.setAdapter(sectionsPagerAdapterInit);
     }
 
     /**
@@ -182,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                                 .cuotas(cuotas).build();
                         clientes.add(cliente);
                     }
-                    agregarTabs(viewPager);
+                    agregarTabs();
                     registrarTotalPlataPrestada(clientes);
 
                 } else {
@@ -202,6 +196,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.overflow, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -210,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         switch (item.getItemId()) {
             case R.id.action_cerrar:
+                firebaseAuth.signOut();
                 Intent intent2 = new Intent(MainActivity.this, Autenticacion.class);
                 startActivity(intent2);
                 finish();
@@ -242,6 +242,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String s) {
+        buscar(s);
         return false;
     }
+
+    private void buscar(final String nombreCliente) {
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getNombre().toLowerCase().contains(nombreCliente.toLowerCase())) {
+                viewPager.setCurrentItem(i);
+            }
+        }
+    }
+
 }

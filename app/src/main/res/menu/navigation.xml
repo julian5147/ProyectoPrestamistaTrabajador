@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/navigation_users"
         android:icon="@drawable/ic_supervisor_account_black_24dp"
-        android:title="Clientes"/>
-    <item
-        android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="Buscar Cliente"
-        app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.widget.SearchView"/>
+        android:title="Clientes"
+        />
     <item
         android:id="@+id/navigation_gastos"
         android:icon="@drawable/ic_local_atm_black_24dp"

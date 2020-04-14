@@ -41,6 +41,7 @@ public class GastosFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gastos, container, false);
         prestamista = FirebaseDatabase.getInstance().getReference();
+        prestamista.keepSynced(true);
         editTextPagos = view.findViewById(R.id.editTextPagos);
         editTextGasolina = view.findViewById(R.id.editTextGasolina);
         editTextPinchazos = view.findViewById(R.id.editTextPinchazos);

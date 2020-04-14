@@ -9,13 +9,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +37,7 @@ public class CuotaActivity extends AppCompatActivity {
 
     private EditText editTextFecha;
     private EditText editTextValorPagadoCuota;
-    private TextView textViewTitulo;
+    private Toolbar textViewTitulo;
     private Button buttonRegistrarCuota;
     private DatabaseReference prestamista;
     private String uid;
@@ -47,8 +50,9 @@ public class CuotaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuota);
-        textViewTitulo = findViewById(R.id.titleCuota);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         prestamista = FirebaseDatabase.getInstance().getReference();
+        prestamista.keepSynced(true);
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
         clienteId = intent.getStringExtra("clienteId");
@@ -57,6 +61,7 @@ public class CuotaActivity extends AppCompatActivity {
         editTextFecha = findViewById(R.id.editTextFechaCuota);
         editTextValorPagadoCuota = findViewById(R.id.editTextValorPagadoCuota);
         buttonRegistrarCuota = findViewById(R.id.buttonRegsitrarCuota);
+        setTitle(titulo);
         editTextFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +75,6 @@ public class CuotaActivity extends AppCompatActivity {
                 registrarCuota();
             }
         });
-        textViewTitulo.setText(titulo);
     }
 
     /**
@@ -119,11 +123,11 @@ public class CuotaActivity extends AppCompatActivity {
      *                   el oprime el botón registrar cuota
      */
     private Cuota obtenerCuota() throws Exception {
-        Date fecha = ParseFecha(editTextFecha.getText().toString());
-        double valorPagado = Double.parseDouble(editTextValorPagadoCuota.getText().toString());
-        if (fecha == null || valorPagado == 0) {
+        if (editTextFecha.getText().toString().isEmpty() || editTextValorPagadoCuota.getText().toString().isEmpty()) {
             throw new Exception("Los campos no pueden estar vacios");
         }
+        Date fecha = ParseFecha(editTextFecha.getText().toString());
+        double valorPagado = Double.parseDouble(editTextValorPagadoCuota.getText().toString());
         prestamista.push();
         Cuota cuota = new Cuota(cuotaId, fecha, valorPagado);
         return cuota;
@@ -144,6 +148,15 @@ public class CuotaActivity extends AppCompatActivity {
             System.out.println(ex);
         }
         return fechaDate;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

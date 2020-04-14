@@ -32,14 +32,22 @@ import aplicacion.prestamista.prestamistaprojecttrabajador.entities.Cuota;
  * Es el fragment el cual se crea por cada cliente registrardo, me permite visualizar la información
  * de cada cliente con su respectivo tab
  */
-public class PlaceholderFragment extends Fragment {
+public class PlaceholderFragmentInicial extends Fragment {
 
     private Cliente cliente;
     private ArrayList<String> cuotas;
     String uid;
     private DatabaseReference prestamista;
+    private TextView textViewFecha;
+    private TextView textViewValor;
+    private TextView textViewNombre;
+    private TextView textViewDireccion;
+    private TextView textViewTelefono;
+    private TextView textViewCuota;
+    private ListView listViewCuotas;
+    private TextView eliminarClient;
 
-    public PlaceholderFragment(Cliente cliente, String uid) {
+    public PlaceholderFragmentInicial(Cliente cliente, String uid) {
         this.cliente = cliente;
         this.cuotas = new ArrayList<>();
         this.uid = uid;
@@ -50,14 +58,14 @@ public class PlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
-        final TextView textViewFecha = root.findViewById(R.id.textViewFecha);
-        final TextView textViewValor = root.findViewById(R.id.textViewValor);
-        final TextView textViewNombre = root.findViewById(R.id.textViewNombre);
-        final TextView textViewDireccion = root.findViewById(R.id.textViewDireccion);
-        final TextView textViewTelefono = root.findViewById(R.id.textViewTelefono);
-        final TextView textViewCuota = root.findViewById(R.id.textViewCuota);
-        final ListView listViewCuotas = root.findViewById(R.id.listViewCuotas);
-        final FloatingActionButton eliminarClient = root.findViewById(R.id.floatingActionButton);
+        textViewFecha = root.findViewById(R.id.textViewFecha);
+        textViewValor = root.findViewById(R.id.textViewValor);
+        textViewNombre = root.findViewById(R.id.textViewNombre);
+        textViewDireccion = root.findViewById(R.id.textViewDireccion);
+        textViewTelefono = root.findViewById(R.id.textViewTelefono);
+        textViewCuota = root.findViewById(R.id.textViewCuota);
+        listViewCuotas = root.findViewById(R.id.listViewCuotas);
+        eliminarClient = root.findViewById(R.id.eliminar);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         adaptarListView(formato);
         listViewCuotas.setItemsCanFocus(true);

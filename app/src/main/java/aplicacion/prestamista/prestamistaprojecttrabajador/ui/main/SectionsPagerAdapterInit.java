@@ -17,12 +17,12 @@ import aplicacion.prestamista.prestamistaprojecttrabajador.entities.Cliente;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapterInit extends FragmentPagerAdapter {
 
-    private final List<Fragment> listaDeFragmentos = new ArrayList<>();
-    private final List<String> listaDeTitulosDeFragmentos = new ArrayList<>();
+    private List<Fragment> listaDeFragmentos = new ArrayList<>();
+    private List<String> listaDeTitulosDeFragmentos = new ArrayList<>();
 
-    public SectionsPagerAdapter(FragmentManager manager) {
+    public SectionsPagerAdapterInit(FragmentManager manager) {
         super(manager);
     }
 
@@ -41,14 +41,24 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         listaDeTitulosDeFragmentos.add(title);
     }
 
-    // Si es el título de la última pestaña, regresamos null, lo
-    // cual regresará el icono únicamente
     @Override
     public CharSequence getPageTitle(int position) {
         return listaDeTitulosDeFragmentos.get(position);
     }
 
+    public List<Fragment> getListaDeFragmentos() {
+        return listaDeFragmentos;
+    }
+
     public List<String> getListaDeTitulosDeFragmentos() {
         return listaDeTitulosDeFragmentos;
+    }
+
+    public void setListaDeFragmentos(List<Fragment> listaDeFragmentos) {
+        this.listaDeFragmentos = listaDeFragmentos;
+    }
+
+    public void setListaDeTitulosDeFragmentos(List<String> listaDeTitulosDeFragmentos) {
+        this.listaDeTitulosDeFragmentos = listaDeTitulosDeFragmentos;
     }
 }
