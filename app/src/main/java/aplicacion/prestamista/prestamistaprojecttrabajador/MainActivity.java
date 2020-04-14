@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(""+clientes.get(0).getDireccion());
+                //System.out.println(""+clientes.get(0).getDireccion());
                 Intent intent = new Intent(MainActivity.this, RegistrarCliente.class);
                 intent.putExtra("uid", uid);
                 startActivity(intent);
