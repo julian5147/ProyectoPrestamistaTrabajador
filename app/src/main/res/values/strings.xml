@@ -1,17 +1,27 @@
 <resources>
-    <string name="app_name">PrestamistaProjectTrabajador</string>
+    <string name="app_name">Gestor de Cobranza</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <string name="app_fecha">Fecha</string>
-    <string name="app_valorPrestado">Valor</string>
-    <string name="app_mombreCliente">Nombre</string>
-    <string name="app_direccion">Dirección</string>
-    <string name="app_telefono">Teléfono</string>
-    <string name="app_cuota">Cuota</string>
-    <string name="app_numCuotas">Número Cuotas</string>
+    <string name="app_fecha">Fecha:</string>
+    <string name="app_valorPrestado">Valor:</string>
+    <string name="app_mombreCliente">Nombre:</string>
+    <string name="app_direccion">Dirección:</string>
+    <string name="app_telefono">Teléfono:</string>
+    <string name="app_cuota">Cuota:</string>
+    <string name="app_numCuotas">Número Cuotas:</string>
     <string name="app_botonRegistrar">Registrar</string>
     <string name="enter_email">Ingrese correo electronico</string>
     <string name="enter_password">Ingrese contraseña</string>
     <string name="registrar">Registrarse</string>
     <string name="login">Iniciar Sesion</string>
+    <string name="registrarCuota">Registrar Cuota</string>
+    <string name="action_cerrar">Cerrar sesión</string>
+    <string name="pagos">Pagos</string>
+    <string name="mantenimiento">Mantenimiento</string>
+    <string name="gasolina">Gasolina</string>
+    <string name="pinchazos">Pinchazos</string>
+    <string name="registrarGastos">Registrar Gastos</string>
+    <string name="hint_search">Buscar Cliente</string>
+    <string name="title_activity_buscar">BuscarActivity</string>
+
 </resources>

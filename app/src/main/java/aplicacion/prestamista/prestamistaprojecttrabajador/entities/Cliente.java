@@ -7,7 +7,13 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+/**
+ * Clase que se encarga de modelar un objeto cliente para representarlos en la app
+ * @author Julián Salgado
+ * @version 1.0
+ */
 @IgnoreExtraProperties
 public class Cliente  {
     private String clienteId;
@@ -18,12 +24,11 @@ public class Cliente  {
     private double valorPrestado;
     private double valorCuota;
     private int numeroCuotas;
-    //private Cuota[] cuotas;
+    private List<Cuota> cuotas;
 
     public Cliente(String clienteId, String nombre) {
         this.clienteId = clienteId;
         this.nombre = nombre;
-        //this.cuotas = new Cuota[numeroCuotas];
     }
 
     public static Builder builder(String id, String nombre) {
@@ -62,6 +67,14 @@ public class Cliente  {
         return numeroCuotas;
     }
 
+    public List<Cuota> getCuotas() {
+        return cuotas;
+    }
+
+    /**
+     * Clase que se encarga de construir un objeto cliente, hace referencia a un patrón de diseño
+     * llamado patrón Builder
+     */
     public static class Builder {
 
         private Cliente cliente;
@@ -102,6 +115,11 @@ public class Cliente  {
 
         public Builder numeroCuotas(int numeroCuotas) {
             this.cliente.numeroCuotas = numeroCuotas;
+            return this;
+        }
+
+        public Builder cuotas(List<Cuota> cuotas){
+            this.cliente.cuotas = cuotas;
             return this;
         }
 
