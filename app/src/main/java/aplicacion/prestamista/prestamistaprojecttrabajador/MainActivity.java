@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         double totalPlataPrestada = 0;
 
         for (Cliente cliente : clientes) {
-            totalPlataPrestada += (cliente.getValorCuota() * (cliente.getNumeroCuotas() - cliente.getCuotas().size()));
+            totalPlataPrestada += (cliente.getValorCuota() * ( cliente.getNumeroCuotas() - cliente.getCuotas().size()));
         }
 
         return totalPlataPrestada;

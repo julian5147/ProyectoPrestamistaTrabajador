@@ -9,62 +9,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextFechaCuota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="10dp"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_date_range_black_24dp">
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/app_fecha"
-                android:fontFamily="monospace"/>
-
-            <EditText
-                android:id="@+id/editTextFechaCuota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:clickable="true"
-                android:ems="10"
                 android:focusable="false"
-                android:inputType="date"
-                android:fontFamily="monospace"/>
-        </LinearLayout>
+                android:fontFamily="monospace"
+                android:hint="Fecha"
+                android:inputType="date" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextValorPagadoCuota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            app:errorEnabled="true">
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/app_valorPrestado"
-                android:fontFamily="monospace"/>
-
-            <EditText
-                android:id="@+id/editTextValorPagadoCuota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:fontFamily="monospace"/>
-        </LinearLayout>
+                android:fontFamily="monospace"
+                android:hint="Valor"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/buttonRegsitrarCuota"
@@ -73,7 +53,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:fontFamily="monospace"
-            android:text="@string/registrarCuota" />
+            android:text="@string/registrarCuota"
+            android:background="@drawable/btn"
+            android:textColor="@drawable/txt_btn"/>
 
     </LinearLayout>
 

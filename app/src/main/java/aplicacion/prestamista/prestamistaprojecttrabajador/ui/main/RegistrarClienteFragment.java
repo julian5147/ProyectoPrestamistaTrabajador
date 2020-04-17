@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,13 +33,13 @@ import java.util.Date;
  * create an instance of this fragment.
  */
 public class RegistrarClienteFragment extends Fragment {
-    private EditText editTextFecha;
-    private EditText editTextValor;
-    private EditText editTextNombre;
-    private EditText editTextDireccion;
-    private EditText editTextTelefono;
-    private EditText editTextCuota;
-    private EditText editTextNumeroCuotas;
+    private TextInputLayout editTextFecha;
+    private TextInputLayout editTextValor;
+    private TextInputLayout editTextNombre;
+    private TextInputLayout editTextDireccion;
+    private TextInputLayout editTextTelefono;
+    private TextInputLayout editTextCuota;
+    private TextInputLayout editTextNumeroCuotas;
     private Button buttonRegistrar;
     private String uid;
     private DatabaseReference prestamista;
@@ -53,7 +54,7 @@ public class RegistrarClienteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_registrar_cliente, container, false);
+        View view = inflater.inflate(R.layout.fragment_registrar_cliente, container, false);
         prestamista = FirebaseDatabase.getInstance().getReference();
         prestamista.keepSynced(true);
         editTextFecha = view.findViewById(R.id.editTextFecha);
@@ -64,7 +65,7 @@ public class RegistrarClienteFragment extends Fragment {
         editTextCuota = view.findViewById(R.id.editTextCuota);
         editTextNumeroCuotas = view.findViewById(R.id.editTextNumCuotas);
         buttonRegistrar = view.findViewById(R.id.buttonRegistrarCliente);
-        editTextFecha.setOnClickListener(new View.OnClickListener() {
+        editTextFecha.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDatePickerDialog();
@@ -89,7 +90,7 @@ public class RegistrarClienteFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 final String selectedDate = day + " / " + (month + 1) + " / " + year;
-                editTextFecha.setText(selectedDate);
+                editTextFecha.getEditText().setText(selectedDate);
             }
 
         });
@@ -112,7 +113,6 @@ public class RegistrarClienteFragment extends Fragment {
         } catch (Exception e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
-
     }
 
     /**
@@ -124,23 +124,98 @@ public class RegistrarClienteFragment extends Fragment {
      *                   el oprime el botón registrar
      */
     private Cliente obtenerCliente() throws Exception {
-        String nombre = editTextNombre.getText().toString();
-        String direccion = editTextDireccion.getText().toString();
-        String telefono = editTextTelefono.getText().toString();
-        if (nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()
-                || editTextFecha.getText().toString().isEmpty() || editTextCuota.getText().toString().isEmpty()
-                || editTextValor.getText().toString().isEmpty() || editTextNumeroCuotas.getText().toString().isEmpty()) {
-            throw new Exception("Los campos no pueden estar vacios");
-
+        String nombre = editTextNombre.getEditText().getText().toString();
+        String direccion = editTextDireccion.getEditText().getText().toString();
+        String telefono = editTextTelefono.getEditText().getText().toString();
+        if (!validarDireccion(direccion) | !validarNombre(nombre) | !validarTelefono(telefono)
+                | !validarCuota() | !validarFecha() | !validarNumCuotas() | !validarValor()) {
+            throw new Exception("No debe haber ningún campo vacio");
         }
-        Date fecha = ParseFecha(editTextFecha.getText().toString());
-        double valorPrestado = Double.parseDouble(editTextValor.getText().toString());
-        double valorCuota = Double.parseDouble(editTextCuota.getText().toString());
-        int numCuotas = Integer.parseInt(editTextNumeroCuotas.getText().toString());
+        Date fecha = ParseFecha(editTextFecha.getEditText().getText().toString());
+        double valorPrestado = Double.parseDouble(editTextValor.getEditText().getText().toString());
+        double valorCuota = Double.parseDouble(editTextCuota.getEditText().getText().toString());
+        int numCuotas = Integer.parseInt(editTextNumeroCuotas.getEditText().getText().toString());
         String clienteId = prestamista.push().getKey();
         Cliente cliente = Cliente.builder(clienteId, nombre).fecha(fecha).valorPrestado(valorPrestado)
                 .direccion(direccion).telefono(telefono).valorCuota(valorCuota).numeroCuotas(numCuotas).build();
         return cliente;
+    }
+
+    private boolean validarNombre(String nombre) {
+
+        if (TextUtils.isEmpty(nombre)) {
+            editTextNombre.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextNombre.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarDireccion(String direccion) {
+
+        if (TextUtils.isEmpty(direccion)) {
+            editTextDireccion.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextDireccion.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarTelefono(String telefono) {
+
+        if (TextUtils.isEmpty(telefono)) {
+            editTextTelefono.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextTelefono.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarFecha() {
+
+        if (editTextFecha.getEditText().getText().toString().isEmpty()) {
+            editTextFecha.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextFecha.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarValor() {
+
+        if (editTextValor.getEditText().getText().toString().isEmpty()) {
+            editTextValor.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextValor.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarCuota() {
+
+        if (editTextCuota.getEditText().getText().toString().isEmpty()) {
+            editTextCuota.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextCuota.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarNumCuotas() {
+
+        if (editTextNumeroCuotas.getEditText().getText().toString().isEmpty()) {
+            editTextNumeroCuotas.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextNumeroCuotas.setError(null);
+            return true;
+        }
     }
 
     /**

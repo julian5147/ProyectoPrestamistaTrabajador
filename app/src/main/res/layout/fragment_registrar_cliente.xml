@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,191 +13,121 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <LinearLayout
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextFecha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_date_range_black_24dp">
 
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="70dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="monospace"
-                        android:text="@string/app_fecha" />
-
-                    <EditText
-                        android:id="@+id/editTextFecha"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:clickable="true"
-                        android:ems="10"
                         android:focusable="false"
                         android:fontFamily="monospace"
+                        android:hint="Fecha"
                         android:inputType="date" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextValor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    app:errorEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="70dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:fontFamily="monospace"
-                        android:text="@string/app_valorPrestado" />
-
-                    <EditText
-                        android:id="@+id/editTextValor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:fontFamily="monospace"
+                        android:hint="Valor"
                         android:inputType="numberDecimal" />
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    app:errorEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="70dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:fontFamily="monospace"
-                        android:text="@string/app_mombreCliente" />
+                        android:hint="Nombre"
+                        android:inputType="textPersonName" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/editTextNombre"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:fontFamily="monospace"
-                        android:inputType="textPersonName"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextDireccion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    app:errorEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="70dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:fontFamily="monospace"
-                        android:text="@string/app_direccion" />
-
-                    <EditText
-                        android:id="@+id/editTextDireccion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:fontFamily="monospace"
+                        android:hint="Dirección"
                         android:inputType="textPostalAddress" />
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    app:errorEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="70dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:fontFamily="monospace"
-                        android:text="@string/app_telefono" />
-
-                    <EditText
-                        android:id="@+id/editTextTelefono"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:fontFamily="monospace"
+                        android:hint="Teléfono"
                         android:inputType="phone" />
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextCuota"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    app:errorEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="70dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:fontFamily="monospace"
-                        android:text="@string/app_cuota" />
-
-                    <EditText
-                        android:id="@+id/editTextCuota"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:fontFamily="monospace"
+                        android:hint="Cuota"
                         android:inputType="numberDecimal" />
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextNumCuotas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    app:errorEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="70dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:fontFamily="monospace"
-                        android:text="@string/app_numCuotas" />
-
-                    <EditText
-                        android:id="@+id/editTextNumCuotas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:fontFamily="monospace"
+                        android:hint="@string/app_numCuotas"
                         android:inputType="number" />
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/buttonRegistrarCliente"
@@ -204,8 +135,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="220dp"
                     android:layout_marginTop="50dp"
+                    android:background="@drawable/btn"
                     android:fontFamily="monospace"
-                    android:text="Registrar" />
+                    android:text="Registrar"
+                    android:textColor="@drawable/txt_btn" />
 
             </LinearLayout>
         </LinearLayout>

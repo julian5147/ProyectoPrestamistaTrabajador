@@ -17,9 +17,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,8 +46,8 @@ import java.util.List;
 public class Autenticacion extends AppCompatActivity {
 
     //defining view objects
-    private EditText TextEmail;
-    private EditText TextPassword;
+    private TextInputLayout TextEmail;
+    private TextInputLayout TextPassword;
     private Button btnRegistrar, btnLogin;
     private ProgressDialog progressDialog;
 
@@ -69,8 +72,8 @@ public class Autenticacion extends AppCompatActivity {
             finish();
         }
         //Referenciamos los views
-        TextEmail = (EditText) findViewById(R.id.TxtEmail);
-        TextPassword = (EditText) findViewById(R.id.TxtPassword);
+        TextEmail = findViewById(R.id.TxtEmail);
+        TextPassword = findViewById(R.id.TxtPassword);
         btnRegistrar = (Button) findViewById(R.id.botonRegistrar);
         btnLogin = (Button) findViewById(R.id.botonLogin);
 
@@ -99,20 +102,12 @@ public class Autenticacion extends AppCompatActivity {
     private void registrarUsuario() {
 
         //Obtenemos el email y la contraseña desde las cajas de texto
-        String email = TextEmail.getText().toString().trim();
-        String password = TextPassword.getText().toString().trim();
+        String email = TextEmail.getEditText().getText().toString().trim();
+        String password = TextPassword.getEditText().getText().toString().trim();
 
-        //Verificamos que las cajas de texto no esten vacías
-        if (TextUtils.isEmpty(email)) {//(precio.equals(""))
-            Toast.makeText(this, "Se debe ingresar un email", Toast.LENGTH_LONG).show();
+        if(!validarEmail(email) | !validarContraseña(password)){
             return;
         }
-
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Falta ingresar la contraseña", Toast.LENGTH_LONG).show();
-            return;
-        }
-
 
         progressDialog.setMessage("Realizando registro en linea...");
         progressDialog.show();
@@ -125,7 +120,7 @@ public class Autenticacion extends AppCompatActivity {
                         //checking if success
                         if (task.isSuccessful()) {
 
-                            Toast.makeText(Autenticacion.this, "Se ha registrado el usuario con el email: " + TextEmail.getText(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(Autenticacion.this, "Se ha registrado el usuario con el email: " + TextEmail.getEditText().getText(), Toast.LENGTH_LONG).show();
                         } else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {//si se presenta una colisión
                                 Toast.makeText(Autenticacion.this, "Ese usuario ya existe ", Toast.LENGTH_SHORT).show();
@@ -139,6 +134,31 @@ public class Autenticacion extends AppCompatActivity {
 
     }
 
+    private boolean validarEmail(String email) {
+
+        //Verificamos que las cajas de texto no esten vacías
+        if (TextUtils.isEmpty(email)) {//(precio.equals(""))
+            TextEmail.setError("Se debe ingresar un email");
+            return false;
+        } else {
+            TextEmail.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarContraseña(String password) {
+        if (TextUtils.isEmpty(password)) {
+            TextPassword.setError("Falta ingresar la contraseña");
+            return false;
+        } else if (password.length() < 8) {
+            TextPassword.setError("La contraseña debe ser de maximo 8 caracteres");
+            return false;
+        } else {
+            TextPassword.setError(null);
+            return true;
+        }
+    }
+
     /**
      * Método que se encarga de verificar si un usuario se puede loguear, además de validar que los campos
      * no esten vacios, mostrando sus respectivos mensajes al usuario, este método es utilizado en el onClick del
@@ -146,20 +166,12 @@ public class Autenticacion extends AppCompatActivity {
      */
     private void loguearUsuario() {
         //Obtenemos el email y la contraseña desde las cajas de texto
-        final String email = TextEmail.getText().toString().trim();
-        String password = TextPassword.getText().toString().trim();
+        final String email = TextEmail.getEditText().getText().toString().trim();
+        String password = TextPassword.getEditText().getText().toString().trim();
 
-        //Verificamos que las cajas de texto no esten vacías
-        if (TextUtils.isEmpty(email)) {//(precio.equals(""))
-            Toast.makeText(this, "Se debe ingresar un email", Toast.LENGTH_LONG).show();
+        if(!validarEmail(email) | !validarContraseña(password)){
             return;
         }
-
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Falta ingresar la contraseña", Toast.LENGTH_LONG).show();
-            return;
-        }
-
 
         progressDialog.setMessage("Realizando consulta en linea...");
         progressDialog.show();
@@ -171,7 +183,7 @@ public class Autenticacion extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
                         if (task.isSuccessful()) {
-                            Toast.makeText(Autenticacion.this, "Bienvenido: " + TextEmail.getText(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(Autenticacion.this, "Bienvenido: " + TextEmail.getEditText().getText(), Toast.LENGTH_LONG).show();
                             trabajador = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = trabajador.getUid();
                             Intent intencion = new Intent(getApplication(), MainActivity.class);
@@ -182,8 +194,9 @@ public class Autenticacion extends AppCompatActivity {
                         } else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {//si se presenta una colisión
                                 Toast.makeText(Autenticacion.this, "Ese usuario ya existe ", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Autenticacion.this, "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(Autenticacion.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                         progressDialog.dismiss();

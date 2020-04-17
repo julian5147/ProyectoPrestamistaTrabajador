@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,8 +36,8 @@ import java.util.Date;
  */
 public class CuotaActivity extends AppCompatActivity {
 
-    private EditText editTextFecha;
-    private EditText editTextValorPagadoCuota;
+    private TextInputLayout editTextFecha;
+    private TextInputLayout editTextValorPagadoCuota;
     private Toolbar textViewTitulo;
     private Button buttonRegistrarCuota;
     private DatabaseReference prestamista;
@@ -62,7 +63,7 @@ public class CuotaActivity extends AppCompatActivity {
         editTextValorPagadoCuota = findViewById(R.id.editTextValorPagadoCuota);
         buttonRegistrarCuota = findViewById(R.id.buttonRegsitrarCuota);
         setTitle(titulo);
-        editTextFecha.setOnClickListener(new View.OnClickListener() {
+        editTextFecha.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDatePickerDialog();
@@ -87,7 +88,7 @@ public class CuotaActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 final String selectedDate = day + " / " + (month + 1) + " / " + year;
-                editTextFecha.setText(selectedDate);
+                editTextFecha.getEditText().setText(selectedDate);
             }
 
         });
@@ -123,14 +124,36 @@ public class CuotaActivity extends AppCompatActivity {
      *                   el oprime el botón registrar cuota
      */
     private Cuota obtenerCuota() throws Exception {
-        if (editTextFecha.getText().toString().isEmpty() || editTextValorPagadoCuota.getText().toString().isEmpty()) {
+        if (!validarFecha() || !validarValor()) {
             throw new Exception("Los campos no pueden estar vacios");
         }
-        Date fecha = ParseFecha(editTextFecha.getText().toString());
-        double valorPagado = Double.parseDouble(editTextValorPagadoCuota.getText().toString());
+        Date fecha = ParseFecha(editTextFecha.getEditText().getText().toString());
+        double valorPagado = Double.parseDouble(editTextValorPagadoCuota.getEditText().getText().toString());
         prestamista.push();
         Cuota cuota = new Cuota(cuotaId, fecha, valorPagado);
         return cuota;
+    }
+
+    private boolean validarFecha() {
+
+        if (editTextFecha.getEditText().getText().toString().isEmpty()) {
+            editTextFecha.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextFecha.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validarValor() {
+
+        if (editTextValorPagadoCuota.getEditText().getText().toString().isEmpty()) {
+            editTextValorPagadoCuota.setError("El campo no puede estar vacio");
+            return false;
+        } else {
+            editTextValorPagadoCuota.setError(null);
+            return true;
+        }
     }
 
     /**

@@ -9,46 +9,74 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
         android:orientation="vertical"
         tools:ignore="UselessParent"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center">
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="47dp"
+        android:padding="10dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TxtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="@string/enter_email"
-            android:inputType="textEmailAddress"
-            android:fontFamily="monospace"/>
+            app:errorEnabled="true"
+            android:layout_marginBottom="10dp"
+            app:startIconDrawable="@drawable/ic_email_black_24dp">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="monospace"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TxtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="@string/enter_password"
-            android:inputType="textPassword"
-            android:fontFamily="monospace"/>
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_lock_black_24dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="monospace"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/botonRegistrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:background="@drawable/btn"
+            android:fontFamily="monospace"
             android:text="@string/registrar"
-            android:fontFamily="monospace"/>
+            android:textColor="@drawable/txt_btn" />
 
         <Button
             android:id="@+id/botonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:background="@drawable/btn"
+            android:fontFamily="monospace"
             android:text="@string/login"
-            android:fontFamily="monospace"/>
+            android:textColor="@drawable/txt_btn" />
 
 
     </LinearLayout>
