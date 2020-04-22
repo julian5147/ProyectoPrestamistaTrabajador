@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,7 +14,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
@@ -23,7 +21,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -210,9 +207,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         switch (item.getItemId()) {
             case R.id.action_cerrar:
                 firebaseAuth.signOut();
-                Intent intent2 = new Intent(MainActivity.this, Autenticacion.class);
+                Intent intent2 = new Intent(MainActivity.this, Authentication.class);
                 startActivity(intent2);
                 finish();
+                break;
+            case R.id.action_cambiar_contraseña:
+                Intent intent = new Intent(MainActivity.this, RestablecerPasswordActivity.class);
+                startActivity(intent);
                 break;
         }
 

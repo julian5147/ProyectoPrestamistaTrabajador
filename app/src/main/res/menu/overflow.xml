@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:title="@string/action_cerrar"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_cambiar_contraseña"
+        android:orderInCategory="100"
+        android:title="Cambiar contraseña"
+        app:showAsAction="never" />
 </menu>

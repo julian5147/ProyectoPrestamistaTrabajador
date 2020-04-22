@@ -27,15 +27,14 @@
                 android:layout_margin="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <ImageButton
                     android:id="@+id/eliminar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_gravity="right"
-                    android:clickable="true"
-                    android:drawableLeft="@drawable/ic_delete_black_24dp"
-                    />
-
+                    android:background="@drawable/btn_iconos"
+                    android:src="@drawable/ic_delete_black_24dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -174,6 +173,14 @@
                         android:fontFamily="monospace"
                         android:textColor="#000"
                         android:textSize="18dp" />
+
+                    <ImageButton
+                        android:id="@+id/llamar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_iconos"
+                        android:src="@drawable/ic_phone_black_24dp" />
 
                 </LinearLayout>
 

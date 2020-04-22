@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,10 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class GastosFragment extends Fragment {
 
-    private EditText editTextPagos;
-    private EditText editTextGasolina;
-    private EditText editTextPinchazos;
-    private EditText editTextMantenimiento;
+    private TextInputLayout editTextPagos;
+    private TextInputLayout editTextGasolina;
+    private TextInputLayout editTextPinchazos;
+    private TextInputLayout editTextMantenimiento;
     private String uid;
     private Button buttonRegistrarGastos;
     private DatabaseReference prestamista;
@@ -64,14 +65,14 @@ public class GastosFragment extends Fragment {
      */
     private double obtenerGastos() {
         double totalGastos = 0;
-        double pagos = editTextPagos.getText().toString().isEmpty() ? 0 :
-                Double.parseDouble(editTextPagos.getText().toString());
-        double gasolina = editTextGasolina.getText().toString().isEmpty() ? 0 :
-                Double.parseDouble(editTextGasolina.getText().toString());
-        double pinchazos = editTextPinchazos.getText().toString().isEmpty() ? 0 :
-                Double.parseDouble(editTextPinchazos.getText().toString());
-        double mantenimiento = editTextMantenimiento.getText().toString().isEmpty() ? 0 :
-                Double.parseDouble(editTextMantenimiento.getText().toString());
+        double pagos = editTextPagos.getEditText().getText().toString().isEmpty() ? 0 :
+                Double.parseDouble(editTextPagos.getEditText().getText().toString());
+        double gasolina = editTextGasolina.getEditText().getText().toString().isEmpty() ? 0 :
+                Double.parseDouble(editTextGasolina.getEditText().getText().toString());
+        double pinchazos = editTextPinchazos.getEditText().getText().toString().isEmpty() ? 0 :
+                Double.parseDouble(editTextPinchazos.getEditText().getText().toString());
+        double mantenimiento = editTextMantenimiento.getEditText().getText().toString().isEmpty() ? 0 :
+                Double.parseDouble(editTextMantenimiento.getEditText().getText().toString());
         totalGastos = pagos + gasolina + pinchazos + mantenimiento;
         return totalGastos;
     }

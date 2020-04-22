@@ -1,12 +1,19 @@
 package aplicacion.prestamista.prestamistaprojecttrabajador.ui.main;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +29,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import aplicacion.prestamista.prestamistaprojecttrabajador.CuotaActivity;
 import aplicacion.prestamista.prestamistaprojecttrabajador.R;
@@ -34,6 +43,7 @@ import aplicacion.prestamista.prestamistaprojecttrabajador.entities.Cuota;
  */
 public class PlaceholderFragmentInicial extends Fragment {
 
+    private static final int REQUEST_CALL = 1;
     private Cliente cliente;
     private ArrayList<String> cuotas;
     String uid;
@@ -45,7 +55,8 @@ public class PlaceholderFragmentInicial extends Fragment {
     private TextView textViewTelefono;
     private TextView textViewCuota;
     private ListView listViewCuotas;
-    private TextView eliminarClient;
+    private ImageButton eliminarClient;
+    private ImageButton llamarClient;
 
     public PlaceholderFragmentInicial(Cliente cliente, String uid) {
         this.cliente = cliente;
@@ -66,6 +77,7 @@ public class PlaceholderFragmentInicial extends Fragment {
         textViewCuota = root.findViewById(R.id.textViewCuota);
         listViewCuotas = root.findViewById(R.id.listViewCuotas);
         eliminarClient = root.findViewById(R.id.eliminar);
+        llamarClient = root.findViewById(R.id.llamar);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         adaptarListView(formato);
         listViewCuotas.setItemsCanFocus(true);
@@ -84,6 +96,12 @@ public class PlaceholderFragmentInicial extends Fragment {
                 eliminarCliente();
             }
         });
+        llamarClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                llamarCliente();
+            }
+        });
         return root;
     }
 
@@ -98,6 +116,32 @@ public class PlaceholderFragmentInicial extends Fragment {
                 prestamista = FirebaseDatabase.getInstance().getReference();
                 prestamista.child("trabajadores").child(uid).child("clientes")
                         .child(cliente.getClienteId()).removeValue();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.create().show();
+    }
+
+    private void llamarCliente() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle("Confirmar");
+        builder.setMessage("¿Estas seguro que deseas llamar este cliente?");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+                } else {
+                    String dial = "tel:" + cliente.getTelefono();
+                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+                }
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -150,5 +194,16 @@ public class PlaceholderFragmentInicial extends Fragment {
                 startActivity(intent1);
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == REQUEST_CALL){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                llamarCliente();
+            }else {
+                Toast.makeText(getContext(),"Permission DENIED",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

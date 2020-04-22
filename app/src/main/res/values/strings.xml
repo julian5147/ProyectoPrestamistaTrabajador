@@ -23,5 +23,7 @@
     <string name="registrarGastos">Registrar Gastos</string>
     <string name="hint_search">Buscar Cliente</string>
     <string name="title_activity_buscar">BuscarActivity</string>
+    <string name="unknown_error">Unknown error occurred.</string>
+    <string name="valor_default">0</string>
 
 </resources>

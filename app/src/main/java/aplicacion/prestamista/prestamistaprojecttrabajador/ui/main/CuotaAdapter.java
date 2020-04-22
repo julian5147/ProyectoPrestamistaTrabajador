@@ -14,13 +14,13 @@ import androidx.annotation.Nullable;
 import aplicacion.prestamista.prestamistaprojecttrabajador.R;
 
 /**
- * Clase que me permite adaptar un layout.xml, con el objetivo de listar todas la cuotas
+ * Class que me permite adaptar un layout.xml, con el objetivo de listar todas la cuotas
  * que cada cliente tiene que pagar
  */
 public class CuotaAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<String> cuotas;
-    private Context context;
+    private final ArrayList<String> cuotas;
+    private final Context context;
 
     public CuotaAdapter(Context context, ArrayList<String> cuotas) {
         super(context, R.layout.cuota_layout, cuotas);
